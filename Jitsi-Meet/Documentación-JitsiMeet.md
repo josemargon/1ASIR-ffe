@@ -10,7 +10,7 @@ Para realizar la práctica se utilizarán 3 máquinas virtuales instaladas todas
 ## Instalación y configuración
 Instalaremos los SO de manera normal siguiendo los pasos que nos indiquen las propias instalaciones y una vez finalizadas, desde hyper-V les añadiremos un segundo adaptador de red, configurado para conexión interna.
 
-![brr](/imagenes/Jitsi/Switch.png)
+![brr](imagenes/Switch.png)
 * ### Ubuntu Server 22.04
 Para comenzar modificamos el archivo de configuración de red para tener conexión: /etc/netplan/01-netcfg.yaml
 
@@ -53,7 +53,7 @@ network:
 
 * ### Dominio
 Para tener un dominio con el que trabajar utilizaremos duckdns.org
-![brr](imagenes/Jitsi/dominio.png)
+![brr](imagenes/dominio.png)
 
 ## Instalación de Jitsi-meet
 Una vez lo tenemos todo preparado podemos empezar a instalar todos los paquetes y repositorios necesarios para instalar Jitsi-Meet en nuestro Ubuntu Server.
@@ -84,7 +84,7 @@ sudo hostnamectl set-hostname jitsipractica.duckdns.org
 ```
 
 También lo añadiremos en el archivo /etc/hosts
-![brr](imagenes/Jitsi/host.png)
+![brr](imagenes/host.png)
 
 * Añadiremos el repositorio de prosody.
 
