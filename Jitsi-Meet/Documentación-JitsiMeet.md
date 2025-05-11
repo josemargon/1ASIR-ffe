@@ -50,6 +50,9 @@ network:
 ```
 
 * ### Windows 10
+En Windows configuraremos la red de forma grafica desde la configuración de redes.
+
+![brr](imagenes/win10.png)
 
 * ### Dominio
 Para tener un dominio con el que trabajar utilizaremos duckdns.org
@@ -288,3 +291,6 @@ server
 sudo service nginx restart
 ```
 
+Una vez realizados todos estos pasos actualizaremos la página de nuestro navegador donde tenemos jitsi-meet abierto y veremos aplicados los cambios que hemos realizado.
+
+![brr](imagenes/modificado.png)
