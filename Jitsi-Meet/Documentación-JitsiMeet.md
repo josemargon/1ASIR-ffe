@@ -50,14 +50,18 @@ network:
 ```
 
 * ### Windows 10
-En Windows configuraremos la red de forma grafica desde la configuración de redes.
+En windows lo configuraremos de forma gráfica desde la configuración de red.
 
 ![brr](imagenes/win10.png)
 
 * ### Dominio
 Para tener un dominio con el que trabajar utilizaremos duckdns.org
+
 ![brr](imagenes/dominio.png)
 
+También añadiremos la dirección de nuestro dominio a los archivos hosts de nuestras máquinas virtuales.
+
+![brr](imagenes/hostw.png)
 ## Instalación de Jitsi-meet
 Una vez lo tenemos todo preparado podemos empezar a instalar todos los paquetes y repositorios necesarios para instalar Jitsi-Meet en nuestro Ubuntu Server.
 Serán necesarios los paquetes gnupg2, nginx-full y curl.
@@ -87,6 +91,7 @@ sudo hostnamectl set-hostname jitsipractica.duckdns.org
 ```
 
 También lo añadiremos en el archivo /etc/hosts
+
 ![brr](imagenes/host.png)
 
 * Añadiremos el repositorio de prosody.
@@ -291,6 +296,14 @@ server
 sudo service nginx restart
 ```
 
-Una vez realizados todos estos pasos actualizaremos la página de nuestro navegador donde tenemos jitsi-meet abierto y veremos aplicados los cambios que hemos realizado.
+* Modificar y verificar cambios
 
+Editamos el archivo ~/jitsi-meet/lang/main.json y desde el modificaremos todo lo que queramos cambiar en Jitsi-meet. Para que se activen los cambios volveremos a ejecutar make.
+
+```
+cd ~/lib-jitsi-meet/ && npm run build
+cd ~/jitsi-meet/ && make
+```
+
+Con todo esto hecho actualizamos la página de Jitsi-meet en el navegador y veremos aplicados los cambios que hemos realizado.
 ![brr](imagenes/modificado.png)
