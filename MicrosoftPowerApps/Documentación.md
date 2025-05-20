@@ -72,3 +72,5 @@ La pantalla de evaluaciones permite añadir evaluaciones de desempeño y evaluac
 En la pantalla calendario podemos ver y añadir eventos, saliendo remarcado  el día en concreto que ocupa el evento.
 
 ![brr](Imagenes/calendario.png)
+
+![brr](Imagenes/nuevo.png)
