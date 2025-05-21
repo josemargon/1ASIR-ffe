@@ -221,3 +221,6 @@ En la pantalla calendario podemos ver y añadir eventos, saliendo remarcado  el 
 ![brr](Imagenes/calendario.png)
 
 ![brr](Imagenes/nuevo.png)
+
+## Enlace de la app
+https://apps.powerapps.com/play/e/default-669222ee-d5e5-4539-987e-a3015ab6df31/a/c50b64b8-0ced-4bc8-9c60-e79cf8059697?tenantId=669222ee-d5e5-4539-987e-a3015ab6df31&hint=fea03a3e-5bf2-4d80-a38a-3ee0e0ec7fb3&sourcetime=1747810157842
