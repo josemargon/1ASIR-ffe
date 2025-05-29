@@ -96,3 +96,63 @@ Desde Services > DHCP Server configuraremos tanto la LAN como la DMZ, la LAN en 
 En el caso del DMZ a mayores de activar el DHCP server, hay que asignarle las Ip correspondientes.
 
 ![brr](Imagenes/k5.png)
+
+Ahora añadimos desde el apartado Firewall > NAT > Port Forward las normas nat que necesitemos aplicar.
+
+![brr](Imagenes/NAT.png)
+
+Desde Firewall > Rules añadiremos normas para cada interfaz de red indicando origen, destino, puertos por los que se redireccionará y una descripción.
+
+![brr](Imagenes/rules.png)
+
+## Instalación de VPN para conexión remota
+
+Para preparar lo necesario iremos a system > Package Manager > Available Packages y buscamos y descargamos openvpn-client-export
+
+![brr](Imagenes/cexport.png)
+
+Para instalar la VPN iremos a VPN > OpenVPN > Wizards donde iniciaremos la configuración del servidor VPN rellenando los datos que se nos van pidiendo.
+
+![brr](Imagenes/wizard.png)
+
+Una vez hecho, nos quedará el servidor VPN creado, podemos comprobarlo en VPN > OpenVPN > Servers
+
+![brr](Imagenes/server.png)
+
+Ahora debemos crear el o los usuarios que queremos que accedan a través de la VPN, para ello vamos a System > User Manager > Users > Add
+
+![brr](Imagenes/usuarios.png)
+
+Es importante que durante la creación del usuario marquemos el checkbox de "Click to create a user certificate", pues es necesario para conectarse a través de la VPN.
+
+![brr](Imagenes/cert.png)
+
+Ahora, deberemos exportal el cliente VPN desde VPN > OpenVPN > Client Export
+
+![brr](Imagenes/clientex.png)
+
+Una vez configurado, guardamos y seleccionamos el instalador del SO desde donde vayamos a conectarnos.
+
+![brr](Imagenes/desc.png)
+
+Se descargará un archivo que deberemos ejecutar desde la máquina anfitriona en este caso, lo cual nos instalará el cliente de OpenVPN y aplicará la configuración de usuario que hemos creado.
+
+![brr](Imagenes/conectado.png)
+
+Solo quedaría seleccionar la configuración instalada, introducir nuestra contraseña de inicio de sesión y estaríamos conectados por VPN.
+
+## Aplicar horarios
+
+Para aplicar horarios a las conexiones iremos a Firewall > Schedules > Add, donde crearemos el horario que necesitemos seleccionando dias, horas y minutos.
+
+![brr](Imagenes/horario.png)
+
+Para aplicarlo a las normas en concreto que necesitemos entraremos a editarlas, y en la sección Extra Options abriremos las opciones avanzadas
+
+![brr](Imagenes/advanced.png)
+
+En el apartado Schedule seleccionamos el filtro horario que hayamos creado para esa norma y guardamos
+
+![brr](Imagenes/sched.png)
+
+Con todo esto hecho ya tendriamos instalado y configurado nuestro firewall PfSense.
