@@ -80,15 +80,39 @@ Para instalar el servidor NFS ejecutamos el siguiente comando.
 sudo apt install nfs-kernel-server
 ```
 
-Para sincronizarlo con Proxmox debemos seleccionar desde este Almacenamiento > Agregar > NFS y al rellenar los datos pulsamos agregar
+Una vez instalado deberemos crear la carpeta que queremos compartir con nuestro Proxmox.
+
+![brr](Imagenes/insnfs.png)
+
+Configuramos y aplicamos el archivo /etc/exports con el directorio que hemos creado y las ip que tendrán acceso.
+
+![brr](Imagenes/exports.png)
+
+![brr](Imagenes/apex.png)
+
+Para sincronizarlo con Proxmox debemos seleccionar desde este Almacenamiento > Agregar > NFS y al rellenar los datos pulsamos agregar.
 
 ![brr](Imagenes/NFS.png)
 
 ## Contenedor
 
+Para poder tener acceso a internet en los contenedores deberemos crear un nuevo adaptador añadiendo lo siguiente al archivo /etc/network/interfaces y reiniciaremos el nodo antes de crear el contenedor.
+
+```
+auto vmbr1
+iface vmbr1 inet static
+    address 192.168.100.1/24
+    bridge-ports none
+    bridge-stp off
+    bridge-fd 0
+    post-up echo 1 > /proc/sys/net/ipv4/ip_forward
+    post-up iptables -t nat -A POSTROUTING -s '192.168.100.0/24' -o vmbr0 -j MASQUERADE
+    post-down iptables -t nat -D POSTROUTING -s '192.168.100.0/24' -o vmbr0 -j MASQUERADE
+```
+
 Para crear un contenedor vamos a necesitar la plantilla correspondiente a instalar. Para ello desde el almacenamiento que nos interese seleccionamos Plantillas de CT > Plantillas En este caso vamos a utilizar Debian
 
-![debian](Imagenes/debian.png)
+![brr](Imagenes/debian.png)
 
 Para instalarlo seleccionamos en la esquina superior derecha Crear CT y se nos abrirá una ventana en la que iremos rellenando los datos que se nos pida para crear el contenedor.
 
@@ -99,6 +123,14 @@ Para instalarlo seleccionamos en la esquina superior derecha Crear CT y se nos a
 Ahora iniciamos el contenedor y pulsamos iniciar para que arranque, para poder manejarlo seleccionamos  ">_ Consola".
 
 ![brr](Imagenes/brum.png)
+
+Para comprobar el correcto funcionamiento de la red, se ha descargado el servidor ssh y me he conectado desde la máquina anfitriona a este.
+
+```
+apt install openssh-server
+```
+
+![brr](Imagenes/debssh.png)
 
 ## Instalar máquinas virtuales
 
@@ -121,6 +153,46 @@ Realizamos los mismos pasos en el otro nodo pero con un SO diferente, en este ca
 ## Migración
 
 Existen dos tipos de migración, migración en caliente y en frio. La migración en caliente es pasar de un nodo a otro un SO estando este en funcionamiento mientras que enfrio el SO estará apagado, en ambos será necesario que la iso esté almacenada en el servidor NFS que he añadido previamente.
-Para hacer una migración tan solo debemos seleccionar el SO que nos interese y pulsar el botón de la esquina superior derecha que pone "Migrar".
+Para hacer una migración tan solo debemos seleccionar el SO que nos interese y pulsar el botón de la esquina superior derecha que pone "Migrar" o haciendo click derecho sobre lo que queramos migrar.
 
+![brr](Imagenes/m1.png)
 
+Seleccionamos el nodo al que vayamos a migrar la máquina o el contenedor.
+
+![brr](Imagenes/m2.png)
+
+Y asi se migraria una máquina virtual o un contenedor en frio entre nodos.
+
+Ahora vamos a devolverla a su nodo original pero esta vez haciendo una migración en caliente, osea sé, encendida. El proceso sería el mismo pero nos indicaría en modo reinicio al hacerlo.
+
+![brr](Imagenes/m4.png)
+
+Aqui en el proceso se puede ver como durante la migración apaga el equipo, lo migra y lo vuelve a iniciar.
+
+![brr](Imagenes/m5.png)
+
+## Red interna entre máquinas
+
+Crearemos un bridge desde la interfaz de red de cada nodo de Proxmox sin conexión a la interfaz física para que actue como red interna
+
+## Buckup
+
+Para hacer un buckup debemos seleccionar la máquina o contenedor que deseemos y seleccionar Respaldo > Respaldar ahora
+
+![brr](Imagenes/bu.png)
+
+![brr](Imagenes/bu2.png)
+
+Como resultado nos queda el backup pudiendo guardarlo tanto en local, como en nuestro servidor NFS.
+
+![brr](Imagenes/bu3.png)
+
+Ahora una vez eliminada la máquina se puede restaurar al estado anterior gracias al backup.
+
+![brr](Imagenes/bu5.png)
+
+![brr](Imagenes/bu6.png)
+
+Para crear un backup automatico lo podemos configurar desde Centro de datos > Respaldo > Agregar, donde se nos abrira una ventana en la que podremos configurar todo lo necesario para ello.
+
+![brr](Imagenes/bu4.png)
