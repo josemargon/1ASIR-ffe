@@ -79,7 +79,6 @@ Para instalar el servidor NFS ejecutamos el siguiente comando.
 ```
 sudo apt install nfs-kernel-server
 ```
-
 Una vez instalado deberemos crear la carpeta que queremos compartir con nuestro Proxmox.
 
 ![brr](Imagenes/insnfs.png)
@@ -109,6 +108,7 @@ iface vmbr1 inet static
     post-up iptables -t nat -A POSTROUTING -s '192.168.100.0/24' -o vmbr0 -j MASQUERADE
     post-down iptables -t nat -D POSTROUTING -s '192.168.100.0/24' -o vmbr0 -j MASQUERADE
 ```
+
 
 Para crear un contenedor vamos a necesitar la plantilla correspondiente a instalar. Para ello desde el almacenamiento que nos interese seleccionamos Plantillas de CT > Plantillas En este caso vamos a utilizar Debian
 
@@ -150,6 +150,11 @@ Realizamos los mismos pasos en el otro nodo pero con un SO diferente, en este ca
 
 ![brr](Imagenes/tiny.png)
 
+Instalamos un servidor nginx
+y la comprobamos que podemos acceder a este.
+
+![brr](Imagenes/nginx2.png)
+
 ## Migración
 
 Existen dos tipos de migración, migración en caliente y en frio. La migración en caliente es pasar de un nodo a otro un SO estando este en funcionamiento mientras que enfrio el SO estará apagado, en ambos será necesario que la iso esté almacenada en el servidor NFS que he añadido previamente.
@@ -174,6 +179,14 @@ Aqui en el proceso se puede ver como durante la migración apaga el equipo, lo m
 ## Red interna entre máquinas
 
 Crearemos un bridge desde la interfaz de red de cada nodo de Proxmox sin conexión a la interfaz física para que actue como red interna
+
+Desde las maquinas configuraremos la conexion propia, estando ambas en la misma red.
+
+En la primera máquina la configuramos con una red 192.168.100.10/24
+
+En la segunda máquina configuramos la red 192.168.100.20/24
+
+Ahora ambas máquinas están en la misma red y cuentan con un adaptador bridge para poder conectarse entre si, para comprobarlo solo hariamos un ping a la ip de la otra.
 
 ## Buckup
 
