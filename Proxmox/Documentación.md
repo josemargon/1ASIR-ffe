@@ -176,6 +176,10 @@ Aqui en el proceso se puede ver como durante la migración apaga el equipo, lo m
 
 ![brr](Imagenes/m5.png)
 
+Una vez iniciado los servicios arrancan y funcionan con normalidad.
+
+![brr](Imagenes/debssh.png)
+
 ## Red interna entre máquinas
 
 Crearemos un bridge desde la interfaz de red de cada nodo de Proxmox sin conexión a la interfaz física para que actue como red interna
